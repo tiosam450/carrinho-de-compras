@@ -1,20 +1,46 @@
+import { useEffect, useState } from "react";
 import { BsCartPlus } from "react-icons/bs";
+import { api } from "../../api/services";
+
+interface ProdutosProps{
+    id: number,
+    cover: string,
+    description: string,
+    price: number,
+    title: string,
+}
 
 export default function Home(){
+
+    const [produtos, setProdutos] = useState<ProdutosProps[]>([])
+
+    useEffect(()=>{
+        async function carregaAPI(){
+            const response = await api.get('/products')
+            setProdutos(response.data)
+        }
+
+        carregaAPI()
+        
+
+    },[])
+
     return(
         <section className="w-full flex flex-col justify-center items-center p-[20px]">
             <h1 className="text-[1.6rem] font-bold">Produtos em alta</h1>
-            <div className="w-[90%] grid grid-cols-[_minmax(200px,_1fr)_minmax(200px,_1fr)__minmax(200px,_1fr)] gap-[20px]">
-                <div className="max-w-[220px]">
-                    <img src="https://m.media-amazon.com/images/I/510CZ4u-0mL._AC_UF1000,1000_QL80_.jpg" alt="produto" className="w-[200px]"/>
-                    <p className="font-bold mb-[10px]">JBL, Fone de Ouvido, Headset Tune 510BT - Preto</p>
+            <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 py-[60px]">
+                
+                { produtos.map((item)=>(
+                    <div key={item.id} className="max-w-[220px] m-[20px]">
+                    <img src={item.cover} alt="produto" className="w-[200px]"/>
+                    <p className="font-bold mb-[10px]">{item.title}</p>
                     <div className="flex items-center gap-2">
-                        <strong>R$ 260,00</strong>
+                        <strong>{item.price.toLocaleString('pt-BR', {style:'currency', currency:'BRL'} )}</strong>
                         <button className="bg-black text-white p-[5px] rounded-md hover:bg-gray-700 transition-all ease-in-out duration-200"><BsCartPlus /></button>
                     </div>
                 </div>
-               
-                
+                ))}
+ 
             </div>
         </section>
     )
