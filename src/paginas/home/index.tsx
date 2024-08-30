@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BsCartPlus } from "react-icons/bs";
 import { api } from "../../api/services";
+import { ContextAPI } from "../../api/contextApi";
 
-interface ProdutosProps{
+export interface ProdutosProps{
     id: number,
     cover: string,
     description: string,
     price: number,
     title: string,
+    qtd: number
 }
 
 export default function Home(){
+    const {addCarrinho} = useContext(ContextAPI)
 
     const [produtos, setProdutos] = useState<ProdutosProps[]>([])
 
@@ -25,6 +28,10 @@ export default function Home(){
 
     },[])
 
+    function adicionaProduto(item:ProdutosProps){
+        addCarrinho(item)
+    }
+
     return(
         <section className="w-full flex flex-col justify-center items-center p-[20px]">
             <h1 className="text-[1.6rem] font-bold">Produtos em alta</h1>
@@ -36,7 +43,7 @@ export default function Home(){
                     <p className="font-bold mb-[10px]">{item.title}</p>
                     <div className="flex items-center gap-2">
                         <strong>{item.price.toLocaleString('pt-BR', {style:'currency', currency:'BRL'} )}</strong>
-                        <button className="bg-black text-white p-[5px] rounded-md hover:bg-gray-700 transition-all ease-in-out duration-200"><BsCartPlus /></button>
+                        <button onClick={()=>adicionaProduto(item)} className="bg-black text-white p-[5px] rounded-md hover:bg-gray-700 transition-all ease-in-out duration-200"><BsCartPlus /></button>
                     </div>
                 </div>
                 ))}

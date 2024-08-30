@@ -1,39 +1,41 @@
 import { createContext, ReactNode, useState } from "react";
+import { ProdutosProps } from "../paginas/home";
 
-interface CarrinhoProps{
-    carrinho: ProdutoProps[]
+interface CarrinhoProps {
+    carrinho: ProdutosProps[]
     qtdCarrinho: number
+    addCarrinho: (item: ProdutosProps) => void
+
 }
 
-interface ProdutoProps{
-    id: number
-    title: string
-    description: string
-    price: number
-    cover: string
-    amount: number
-}
 
-interface ConteudoProps{
+interface ConteudoProps {
     children: ReactNode
 }
 
 export const ContextAPI = createContext({} as CarrinhoProps)
 
 
-function APIprovider({children}: ConteudoProps){
-   
-    const [carrinho, setCarrinho] = useState<ProdutoProps[]>([])
-   
-    return(
-       <ContextAPI.Provider value={{
-        carrinho,
-        qtdCarrinho: carrinho.length
+function APIprovider({ children }: ConteudoProps) {
+
+    const [carrinho, setCarrinho] = useState<ProdutosProps[]>([])
+
+    function addCarrinho(item: ProdutosProps) {
+
+
+        console.log(item)
+    }
+
+    return (
+        <ContextAPI.Provider value={{
+            carrinho,
+            qtdCarrinho: carrinho.length,
+            addCarrinho
         }}>
 
-        {children}
+            {children}
 
-       </ContextAPI.Provider> 
+        </ContextAPI.Provider>
     )
 }
 
