@@ -2,15 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { BsCartPlus } from "react-icons/bs";
 import { api } from "../../api/services";
 import { ContextAPI } from "../../api/contextApi";
+import { ProdutosProps } from "../../api/contextApi";
 
-export interface ProdutosProps{
-    id: number,
-    cover: string,
-    description: string,
-    price: number,
-    title: string,
-    qtd: number
-}
 
 export default function Home(){
     const {addCarrinho} = useContext(ContextAPI)
@@ -28,8 +21,8 @@ export default function Home(){
 
     },[])
 
-    function adicionaProduto(item:ProdutosProps){
-        addCarrinho(item)
+    function adicionaProduto(novoItem:ProdutosProps){
+        addCarrinho(novoItem)
     }
 
     return(

@@ -1,42 +1,67 @@
 import { createContext, ReactNode, useState } from "react";
-import { ProdutosProps } from "../paginas/home";
 
-interface CarrinhoProps {
+export interface ProdutosProps{
+    id: number
+    cover: string
+    description: string
+    price: number
+    title: string
+    qtd: number
+    amount: number
+    total: number
+}
+
+interface CarrinhoProps{
     carrinho: ProdutosProps[]
     qtdCarrinho: number
-    addCarrinho: (item: ProdutosProps) => void
+    addCarrinho: (novoItem: ProdutosProps)=> void
 
 }
 
-
-interface ConteudoProps {
+interface ConteudoProps{
     children: ReactNode
 }
 
 export const ContextAPI = createContext({} as CarrinhoProps)
 
 
-function APIprovider({ children }: ConteudoProps) {
-
+export const APIprovider = ({children}: ConteudoProps)=>{
+   
     const [carrinho, setCarrinho] = useState<ProdutosProps[]>([])
 
-    function addCarrinho(item: ProdutosProps) {
+    function addCarrinho(novoItem:ProdutosProps){
+        console.log(novoItem)
+        // Verifica se o item já está no carrinho
+        const indexProduto = carrinho.findIndex(item => item.id == novoItem.id)
 
+        if(indexProduto !== -1){
+            let carrinhoTemp = carrinho
+            carrinhoTemp[indexProduto].amount += 1
+            // carrinhoTemp[indexProduto].total = carrinhoTemp[indexProduto].price * carrinhoTemp[indexProduto].amount   
+            
+            setCarrinho(carrinhoTemp)
+            return
+        }
 
-        console.log(item)
+        let dados = {
+            ...novoItem,
+            amount: 1,
+            total: novoItem.price
+        }
+
+        setCarrinho(produtos =>[...produtos, dados])
     }
-
-    return (
-        <ContextAPI.Provider value={{
-            carrinho,
-            qtdCarrinho: carrinho.length,
-            addCarrinho
+   
+    return(
+       <ContextAPI.Provider value={{
+        carrinho,
+        qtdCarrinho: carrinho.length,
+        addCarrinho,
         }}>
 
-            {children}
+        {children}
 
-        </ContextAPI.Provider>
+       </ContextAPI.Provider> 
     )
 }
 
-export default APIprovider
