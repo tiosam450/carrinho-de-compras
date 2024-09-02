@@ -5,11 +5,11 @@ import { ContextAPI } from "../../api/contextApi";
 
 export default function Header() {
 
-    const {qtdCarrinho} = useContext(ContextAPI)
+    const { qtdCarrinho } = useContext(ContextAPI)
 
     return (
         <>
-            <header className="bg-slate-200 w-full flex justify-center py-[12px]">
+            <header className="bg-slate-200 w-full flex justify-center py-[12px] sticky top-0">
                 <nav className="w-[90%] flex items-center justify-between">
                     <h3><Link to='/'>Logo</Link></h3>
                     <Link to='/carrinho' className="relative">

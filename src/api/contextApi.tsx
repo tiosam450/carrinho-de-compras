@@ -68,7 +68,6 @@ export const APIprovider = ({ children }: ConteudoProps) => {
         totalGeral(listaTemp)
     }
 
-
     function delProduto(produto: ProdutosProps) {
         const indexProduto = carrinho.findIndex(item => item.id == produto.id)
 
@@ -81,12 +80,12 @@ export const APIprovider = ({ children }: ConteudoProps) => {
         }
     }
 
-    function totalGeral (itens:ProdutosProps[]){
+    function totalGeral(itens: ProdutosProps[]) {
         let listaprodutos = itens
-        let soma = listaprodutos.reduce((acumuladior, item)=>(
+        let soma = listaprodutos.reduce((acumuladior, item) => (
             acumuladior + item.total
         ), 0)
-        const formataValor = soma.toLocaleString('pt-BR', {style: "currency", currency:'BRL'})
+        const formataValor = soma.toLocaleString('pt-BR', { style: "currency", currency: 'BRL' })
         setTotal(formataValor)
     }
 
