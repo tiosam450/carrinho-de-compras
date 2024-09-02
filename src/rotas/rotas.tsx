@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "../paginas/home";
 import Carrinho from "../paginas/carrinho";
 import Header from "../componentes/header";
+import Produto from "../paginas/produto";
 
  
  const rotas = createBrowserRouter([{
@@ -17,8 +18,8 @@ import Header from "../componentes/header";
             element:<Carrinho/>
         },
         {
-            path:'/carrinho/:id',
-            element:<Carrinho/>
+            path:'/produto/:id',
+            element:<Produto/>
         }
 
     ]

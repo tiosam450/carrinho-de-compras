@@ -3,6 +3,7 @@ import { BsCartPlus } from "react-icons/bs";
 import { api } from "../../api/services";
 import { ContextAPI } from "../../api/contextApi";
 import { ProdutosProps } from "../../api/contextApi";
+import { Link } from "react-router-dom";
 
 
 export default function Home(){
@@ -32,7 +33,7 @@ export default function Home(){
                 
                 { produtos.map((item)=>(
                     <div key={item.id} className="max-w-[220px] m-[20px]">
-                    <img src={item.cover} alt="produto" className="w-[200px]"/>
+                    <Link to={`/produto/${item.id}`}><img src={item.cover} alt="produto" className="w-[200px]"/></Link>
                     <p className="font-bold mb-[10px]">{item.title}</p>
                     <div className="flex items-center gap-2">
                         <strong>{item.price.toLocaleString('pt-BR', {style:'currency', currency:'BRL'} )}</strong>
